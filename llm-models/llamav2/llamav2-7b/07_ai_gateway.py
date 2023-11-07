@@ -42,7 +42,7 @@ mlflow.gateway.set_gateway_uri("databricks")
 # COMMAND ----------
 
 mlflow.gateway.create_route(
-    name=gateway_route_name,
+    name=gateway_route_name+"_ff",
     route_type="llm/v1/completions",
     model= {
         "name": endpoint_name, 
@@ -53,6 +53,10 @@ mlflow.gateway.create_route(
         }
     }
 )
+
+# COMMAND ----------
+
+mlflow.gateway.get_route(gateway_route_name)
 
 # COMMAND ----------
 
@@ -76,8 +80,12 @@ def build_prompt(instruction):
 
 # COMMAND ----------
 
+gateway_route_name+"_ff"
+
+# COMMAND ----------
+
 response = mlflow.gateway.query(
-    route=gateway_route_name,
+    route=gateway_route_name+"_ff",
     data={"prompt": build_prompt("What is MLflow?"), "temperature": 0.3, "max_tokens": 512}
 )
 
